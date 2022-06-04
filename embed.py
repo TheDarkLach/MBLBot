@@ -9,7 +9,7 @@ class embed(commands.Cog):
         self.bot = bot
 
     
-    @commands.command()
+    @commands.command(help = "test embed")
     @has_permissions(kick_members=True)
     async def testembed(self, ctx):
         time = datetime.datetime.utcnow()

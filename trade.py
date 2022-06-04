@@ -7,7 +7,7 @@ class trade(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.command()
+    @commands.command(help = "some trade thing idk this raptor")
     @has_permissions(kick_members=True)
     async def trade(self, ctx, team1, team2):
         embed = discord.Embed(title="**Trade Alert**")

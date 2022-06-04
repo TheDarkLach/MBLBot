@@ -1,10 +1,10 @@
 import discord
 from discord.ext import commands
+from pretty_help import DefaultMenu, PrettyHelp
 
 
-bot = commands.Bot(command_prefix=";", intents=discord.Intents.all())
+bot = commands.Bot(command_prefix=";", intents=discord.Intents.all(),help_command=PrettyHelp())
 
-bot.remove_command('help')
 
 @bot.event
 async def on_ready():
@@ -16,8 +16,10 @@ initial_extensions = (
     'commands',
     'events',
     'embed',
-    'sheet',
-    'trade'
+    'roster',
+    'trade',
+    'signing',
+    'stats',
 )
 
 for extension in initial_extensions:
@@ -25,6 +27,10 @@ for extension in initial_extensions:
     bot.load_extension(extension)
   except Exception as e:
     print(f'Failed to load extension {extension}.')
+
+
+menu = DefaultMenu('◀️', '▶️', '❌') # You can copy-paste any icons you want.
+bot.help_command = PrettyHelp(navigation=menu, color=discord.Colour.blue(),no_category="Main",show_index=False) 
 
 
 bot.run("")

@@ -17,7 +17,7 @@ creds = ServiceAccountCredentials.from_json_keyfile_name('mycredentials.json',sc
 client = gspread.authorize(creds)
 
 
-test = client.open("MBL").sheet1
+test = client.open("MBLS").sheet1
 
 def getData(msg):
     global data, data2
@@ -39,7 +39,6 @@ def getData(msg):
         data = test.get('A172:B193')
     
     
-
     stdout_backup = sys.stdout
     sys.stdout = string_buffer = StringIO()
     my_function()  # <-- call the function, sys.stdout is redirected now
@@ -64,24 +63,21 @@ def my_function():
 
 
 
-class sheet(commands.Cog):
+class roster(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
 
-    @commands.command()
-    async def roster(self,ctx):
-        #await ctx.send(data2)
-        await ctx.send("Which teams roster are you trying to look at?")
-
-        def check(msg):
-            return msg.author == ctx.author and msg.channel
-        msg = await self.bot.wait_for("message", check=check)
-        msg = msg.content.lower()
+    @commands.command(help = "Check team rosters")
+    async def roster(self,ctx,msg=None):
         getData(msg)
-        await ctx.send("```" + msg.capitalize() + "'s roster:" + "\n" + data2 + "```")
+        await ctx.send(msg.capitalize() + "'s roster:" + "\n" + data2)
+    
+    @commands.command(help="add member to roster (this ones hard)")
+    async def rosteradd(self,ctx):
+        await ctx.send("hey lol")
 
 
 
 def setup(bot):
-  bot.add_cog(sheet(bot))
+  bot.add_cog(roster(bot))
