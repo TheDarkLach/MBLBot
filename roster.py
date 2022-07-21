@@ -1,6 +1,7 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from discord.ext import commands
+import discord
 import itertools
 import sys
 from io import StringIO
@@ -17,12 +18,13 @@ creds = ServiceAccountCredentials.from_json_keyfile_name('mycredentials.json',sc
 client = gspread.authorize(creds)
 
 
-test = client.open("MBLS").sheet1
+test = client.open("yab").sheet1
+
 
 def getData(msg):
     global data, data2
     if msg == "wolves":
-        data = test.get('A3:B24')
+        data = test.get('B3:C16')
     elif msg == "evokers":
         data = test.get('A27:B49')
     elif msg == "boom":
@@ -37,30 +39,22 @@ def getData(msg):
         data = test.get('A148:B169')
     elif msg == "surf":
         data = test.get('A172:B193')
-    
-    
-    stdout_backup = sys.stdout
-    sys.stdout = string_buffer = StringIO()
-    my_function()  # <-- call the function, sys.stdout is redirected now
+    else:
+        print("wtf")
 
-    sys.stdout = stdout_backup  # restore old sys.stdout
-
-    #have to get the data from a print because i cant do data = *iterable for some dumbass reason
-    string_buffer.seek(0)
-    data = string_buffer.read()
-
-    data = data.split(",")
-
-    #replace every second comma with a \n
-    data2 = "\n".join(["".join(data[i:i+2]) for i in range(0,len(data),2)])
+def adding(x , y):
+    return x + y
 
 
+def getCap():
+    global count
+    count = 0
 
-
-def my_function():
-    print(*itertools.chain.from_iterable(data),sep=',')
-
-
+    for i in data:
+        num = data[i][0]
+        print(num)
+        num2 = adding(num2,num)
+    count = num2
 
 
 class roster(commands.Cog):
@@ -71,11 +65,19 @@ class roster(commands.Cog):
     @commands.command(help = "Check team rosters")
     async def roster(self,ctx,msg=None):
         getData(msg)
-        await ctx.send(msg.capitalize() + "'s roster:" + "\n" + data2)
+        message = ''
+        #print(data[0][1])
+        for i in data:
+            message = message + '\n'
+            for x in i:
+                message = message + x + ' '
+        
+        getCap()
+        embed = discord.Embed(title=msg.capitalize() + "'s roster: ", description=message)
+        embed.set_footer(text=f'cap: {count} / 35')
+        await ctx.send(embed=embed)
+        
     
-    @commands.command(help="add member to roster (this ones hard)")
-    async def rosteradd(self,ctx):
-        await ctx.send("hey lol")
 
 
 

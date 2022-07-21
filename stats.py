@@ -1,6 +1,7 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from discord.ext import commands
+import discord
 
 scope = ['https://www.googleapis.com/auth/spreadsheets',
          'https://www.googleapis.com/auth/drive.file',
@@ -8,8 +9,7 @@ scope = ['https://www.googleapis.com/auth/spreadsheets',
 
 creds = ServiceAccountCredentials.from_json_keyfile_name('mycredentials.json',scope)
 client = gspread.authorize(creds)
-test = client.open("MBLS").sheet1
-
+test = client.open("yab").sheet1
 
 
 class stats(commands.Cog):
@@ -31,7 +31,9 @@ class stats(commands.Cog):
         c = c.replace(",","\n")
         c = c.replace("{","")
         c = c.replace("}","")
-        await ctx.send(c)
+        embed = discord.Embed(title=user + "'s stats: ", description=c)
+        await ctx.send(embed=embed)
+        #await ctx.send(c)
 
 
 

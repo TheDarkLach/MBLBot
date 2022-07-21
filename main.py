@@ -21,6 +21,18 @@ initial_extensions = (
     'signing',
     'stats',
 )
+@bot.command()
+async def r(ctx):
+  message = "```diff\n"
+  for extension in initial_extensions:
+    try:
+      bot.unload_extension(extension)
+      bot.load_extension(extension)
+      message = message + "+ Reloaded " + extension + ".py\n"
+    except Exception as e:
+      message = message + "- Failed to reload " + extension + ".py\n"
+  message = message + "```"
+  await ctx.send(message)
 
 for extension in initial_extensions:
   try:
@@ -33,4 +45,4 @@ menu = DefaultMenu('◀️', '▶️', '❌') # You can copy-paste any icons you
 bot.help_command = PrettyHelp(navigation=menu, color=discord.Colour.blue(),no_category="Main",show_index=False) 
 
 
-bot.run("")
+bot.run("OTgyMTIwMjQ5MDA2NjI4ODY2.GjoHMZ.lblb-KDejAl8C6FntqXLkcTY9SrhqMUu9RJlwg")
