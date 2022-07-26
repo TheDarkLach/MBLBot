@@ -2,6 +2,17 @@ import discord
 from discord.ext import commands
 from discord.ext.commands import has_permissions
 import datetime
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+scope = ['https://www.googleapis.com/auth/spreadsheets',
+         'https://www.googleapis.com/auth/drive.file',
+         'https://www.googleapis.com/auth/drive']
+
+creds = ServiceAccountCredentials.from_json_keyfile_name('mycredentials.json',scope)
+client = gspread.authorize(creds)
+test = client.open("yab").sheet1
+
 
 class trade(commands.Cog):
     def __init__(self, bot):

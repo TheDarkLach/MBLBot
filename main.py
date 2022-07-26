@@ -45,4 +45,4 @@ menu = DefaultMenu('◀️', '▶️', '❌') # You can copy-paste any icons you
 bot.help_command = PrettyHelp(navigation=menu, color=discord.Colour.blue(),no_category="Main",show_index=False) 
 
 
-bot.run("OTgyMTIwMjQ5MDA2NjI4ODY2.GjoHMZ.lblb-KDejAl8C6FntqXLkcTY9SrhqMUu9RJlwg")
+bot.run("")

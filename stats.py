@@ -24,14 +24,15 @@ class stats(commands.Cog):
         data = test.row_values(cell.row)
         data2 = test.row_values(2)
 
+
         c = dict(zip(data2, data))
-        #convert to string n clean up
         c = str(c)
         c = c.replace("'","")
         c = c.replace(",","\n")
         c = c.replace("{","")
         c = c.replace("}","")
         embed = discord.Embed(title=user + "'s stats: ", description=c)
+        print(test)
         await ctx.send(embed=embed)
         #await ctx.send(c)
 

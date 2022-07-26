@@ -2,8 +2,6 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from discord.ext import commands
 import discord
-import itertools
-import sys
 from io import StringIO
 
 global data2
@@ -26,34 +24,30 @@ def getData(msg):
     if msg == "wolves":
         data = test.get('B3:C16')
     elif msg == "evokers":
-        data = test.get('A27:B49')
+        data = test.get('B27:C49')
     elif msg == "boom":
-        data = test.get('A52:B73')
+        data = test.get('B52:C73')
     elif msg == "embers":
-        data = test.get('A76:B97')
+        data = test.get('B76:C97')
     elif msg == "villagers":
-        data = test.get('A100:B121')
+        data = test.get('B100:C121')
     elif msg == "voodoo":
-        data = test.get('A124:B145')
+        data = test.get('B124:C145')
     elif msg == "parrots":
-        data = test.get('A148:B169')
+        data = test.get('B148:C169')
     elif msg == "surf":
-        data = test.get('A172:B193')
+        data = test.get('B172:C193')
     else:
         print("wtf")
-
-def adding(x , y):
-    return x + y
 
 
 def getCap():
     global count
     count = 0
-
+    num2 = 0
     for i in data:
-        num = data[i][0]
-        print(num)
-        num2 = adding(num2,num)
+        num = float(i[0])
+        num2 = num2 + num
     count = num2
 
 
@@ -66,11 +60,12 @@ class roster(commands.Cog):
     async def roster(self,ctx,msg=None):
         getData(msg)
         message = ''
-        #print(data[0][1])
         for i in data:
             message = message + '\n'
             for x in i:
                 message = message + x + ' '
+
+        message = message.replace('_','\_')
         
         getCap()
         embed = discord.Embed(title=msg.capitalize() + "'s roster: ", description=message)
